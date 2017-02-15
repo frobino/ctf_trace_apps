@@ -1,0 +1,44 @@
+-- GENERATE TRACE --
+
+Compile the application:
+
+    Make
+
+Run the application:
+
+    ./main.x
+
+You see:
+
+    Press Enter to continue...
+
+Start an LTTng session daemon:
+
+    lttng-sessiond --daemonize
+
+Note that a session daemon might already be running, for example as a service that the distribution’s service manager started.
+
+List the available user space tracepoints:
+
+    lttng list --userspace
+
+You see the hello_world:my_first_tracepoint tracepoint listed under the ./main process.
+
+Create a tracing session:
+
+    lttng create my-user-space-session
+
+Create an event rule which matches the hello_world:my_first_tracepoint event name:
+
+    lttng enable-event --userspace hello_world:my_first_tracepoint
+
+Start tracing:
+
+    lttng start
+
+Go back to the running hello application and press Enter. The program executes all tracepoint() instrumentation points and exits.
+
+Stop tracing and destroy the tracing session:
+
+    lttng stop
+    lttng destroy
